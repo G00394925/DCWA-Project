@@ -28,10 +28,22 @@ var getStudents = function() {
     })
 }
 
-var updateStudent = function(sid, name, age) {
+var updateStudent = function(name, age, sid) {
     return new Promise((resolve, reject) => {
-        
+        var query = {
+            sql: 'update student SET name=?, age=? WHERE sid=?',
+            values: [name, age, sid]
+
+        }
+        pool.query(query)
+        .then((data) => {
+            console.log(sid, name, age)
+            resolve(data)
+        })
+        .catch((error) => {
+            reject(error)
+        })
     })
 }
 
-module.exports = { getStudents }
+module.exports = { getStudents, updateStudent }
