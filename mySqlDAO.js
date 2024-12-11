@@ -17,7 +17,7 @@ pmysql.createPool({
 
 var getStudents = function() {
     return new Promise((resolve, reject) => {
-        pool.query('select * from students')
+        pool.query('select * from student')
         .then((data) => {
             console.log(JSON.stringify(data))
             resolve(data)

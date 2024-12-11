@@ -1,0 +1,17 @@
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Update</th>
+    </tr>
+
+    <% student.forEach((student) => { %>
+        <tr>
+            <td><%= student.sid %></td>
+            <td><%= student.name %></td>
+            <td><%= student.age %></td>
+            <td><a href="/">Update</a></td>
+        </tr>
+    <% }) %>
+</table>

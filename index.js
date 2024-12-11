@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+var mySqlDao = require('./mySqlDAO')
 const app = express()
 const ejs = require('ejs')
 
@@ -17,6 +18,12 @@ app.get('/', (req, res) => {
     res.render("home")
 })
 
-app.get('students'), (req, res) => {
-    
-}
+app.get('/students', (req, res) => {
+    mySqlDao.getStudents()
+    .then((data) => {
+        res.render("students", {"student": data})
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
