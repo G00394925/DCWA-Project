@@ -60,3 +60,39 @@ app.post('/students/edit/:sid', [
 
     }
 })
+
+app.get('/students/add', (req, res) => {
+        res.render("addStudent", {"errors": undefined})
+})
+
+app.post('/students/add', [
+
+    //TODO: Validate ID
+    
+        check("name").isLength({min: 2})
+        .withMessage("Student Name should be at least 2 characters"),
+
+        check("age").isInt({gt: 17})
+        .withMessage("Student must be older than 18")
+    ], 
+    
+    (req, res) => {
+    
+        const errors = validationResult(req)
+
+        if(!errors.isEmpty()) {
+            res.render("addStudent", {errors: errors.errors})
+        }
+
+        else {
+        
+            mySqlDao.addStudent(req.body.id, req.body.name, req.body.age)
+            .then(() => {
+                res.redirect('/students')
+            })
+    
+            .catch((error) => {
+                res.send(error)
+            })
+        }
+})

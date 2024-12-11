@@ -17,7 +17,7 @@ pmysql.createPool({
 
 var getStudents = function() {
     return new Promise((resolve, reject) => {
-        pool.query('select * from student')
+        pool.query('select * from student ORDER BY sid ASC')
         .then((data) => {
             console.log(JSON.stringify(data))
             resolve(data)
@@ -25,6 +25,22 @@ var getStudents = function() {
         .catch((error) => {
             reject(error)
         })
+    })
+}
+
+var getStudentByID = function(id) {
+    return new Promise((resolve, reject) => {
+        var query = {
+            sql: 'select * from student where sid=?',
+            values: id 
+        }
+        pool.query(query)
+        .then((data) => {
+            resolve(data)
+        })
+        .catch((error) => [
+            reject(error)
+        ])
     })
 }
 
@@ -46,4 +62,21 @@ var updateStudent = function(name, age, sid) {
     })
 }
 
-module.exports = { getStudents, updateStudent }
+var addStudent = function(sid, name, age) {
+    return new Promise((resolve, reject) => {
+        var query = {
+            sql: 'INSERT INTO student VALUES (?, ?, ?)',
+            values: [sid, name, age]
+        }
+
+        pool.query(query)
+        .then((data) => {
+            resolve(data)
+        })
+        .catch((error) => {
+            reject(error)
+        })
+    })
+}
+
+module.exports = { getStudents, updateStudent, addStudent, getStudentByID }
