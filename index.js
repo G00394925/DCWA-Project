@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 var mySqlDao = require('./mySqlDAO')
 const app = express()
 const ejs = require('ejs')
+const { check, validationResult } = require('express-validator');
 
 const port = 3004
 
@@ -29,19 +30,33 @@ app.get('/students', (req, res) => {
 })
 
 app.get('/students/edit/:sid', (req, res) => {
-
-    res.render("editStudent", {id: req.params.sid})
-
+    res.render("editStudent", {id: req.params.sid, "errors": undefined})
 })
 
-app.post('/students/edit/:sid', (req, res) => {
-    console.log(req.params.sid)
-    mySqlDao.updateStudent(req.body.name, req.body.age, req.params.sid)
-    .then(() => {
-        console.log("Updated student of ID " + req.params.sid)
-        res.redirect('/students')
-    })
-    .catch((error) => {
-        res.send(error)
-    })
+app.post('/students/edit/:sid', [
+        check("name").isLength({min: 2})
+        .withMessage("Student Name should be at least 2 characters"),
+
+        check("age").isInt({gt: 17})
+        .withMessage("Student must be older than 18")
+    ],
+
+    (req, res) => {
+        const errors = validationResult(req)
+
+        if(!errors.isEmpty()) {
+            res.render("editStudent", {id: req.params.sid, errors: errors.errors})
+        }
+
+        else{
+            mySqlDao.updateStudent(req.body.name, req.body.age, req.params.sid)
+            .then(() => {
+                console.log("Updated student of ID " + req.params.sid)
+                res.redirect('/students')
+            })
+            .catch((error) => {
+                res.send(error)
+            })
+
+    }
 })

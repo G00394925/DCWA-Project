@@ -2,9 +2,20 @@
 </br>
 <h1>Update Student</h1>
 
+
 <form action="/students/edit/<%=id%>" method="POST">
-    <label>Name <input type="text" name="name"/></label> </br>
-    <label>Age  <input type="text" name="age"/></label> </br>
+    
+    <h3>ID: <%=id%></h3>
+    <% if (errors != undefined) { %>
+        <ul>
+        <% errors.forEach((error) => { %>
+            <li style="color: red"><%= error.msg %></li>
+        <% }) %>
+        </ul>
+    <% } %>
+    
+    <label>Edit Name <input type="text" name="name"/></label> </br>
+    <label>Edit Age  <input type="text" name="age"/></label> </br>
     </br>
-    <input type="submit"/>
+    <input type="submit" value="Confirm Changes"/>
 </form>
