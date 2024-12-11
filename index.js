@@ -27,3 +27,7 @@ app.get('/students', (req, res) => {
         res.send(error)
     })
 })
+
+app.get('/students/edit/:sid', (req, res) => {
+    res.render("editStudent")
+})

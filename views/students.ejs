@@ -1,3 +1,10 @@
+<h1>Students</h1>
+
+<a href="/">Add Student</a> </br>
+<a href="/">Home</a> </br>
+
+</br>
+
 <table border="1">
     <tr>
         <th>ID</th>
@@ -11,7 +18,7 @@
             <td><%= student.sid %></td>
             <td><%= student.name %></td>
             <td><%= student.age %></td>
-            <td><a href="/">Update</a></td>
+            <td><a href="/students/edit/:<%= student.sid %>">Update</a></td>
         </tr>
     <% }) %>
 </table>

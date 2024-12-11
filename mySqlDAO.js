@@ -28,4 +28,10 @@ var getStudents = function() {
     })
 }
 
+var updateStudent = function(sid, name, age) {
+    return new Promise((resolve, reject) => {
+        
+    })
+}
+
 module.exports = { getStudents }
