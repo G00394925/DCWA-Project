@@ -81,7 +81,7 @@ var addStudent = function(sid, name, age) {
 
 var getGrades = function() {
     return new Promise((resolve, reject) => [
-        pool.query('SELECT student.name AS Student, module.name, grade.grade FROM module LEFT JOIN grade ON module.mid = grade.mid RIGHT JOIN student ON student.sid = grade.sid ORDER BY student.name ASC')
+        pool.query('SELECT student.name AS Student, module.name, grade.grade FROM module LEFT JOIN grade ON module.mid = grade.mid RIGHT JOIN student ON student.sid = grade.sid ORDER BY student.name ASC, grade.grade ASC')
         .then((data) => {
             resolve(data)
         })
