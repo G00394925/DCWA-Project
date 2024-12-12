@@ -117,3 +117,13 @@ app.get('/lecturers', (req, res) => {
         res.send(error)
     ])
 })
+
+app.get('/lecturers/delete/:lid', (req, res) => {
+    mongoDAO.deleteLecturer(req.params.lid)
+    .then(() => {
+        res.redirect('/lecturers')
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})

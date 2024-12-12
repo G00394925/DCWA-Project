@@ -29,4 +29,18 @@ var showLecturers = function() {
     })
 }
 
-module.exports = { showLecturers }
+var deleteLecturer = function(id) {
+    return new Promise((resolve, reject) => {
+        var cursor = coll.deleteOne({_id: id})
+        cursor.toArray()
+
+        .then((data) => {
+            resolve(data)
+        })
+        .catch((error) => {
+            reject(error)
+        })
+    })
+}
+
+module.exports = { showLecturers, deleteLecturer }
