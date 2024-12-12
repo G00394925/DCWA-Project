@@ -67,8 +67,8 @@ app.get('/students/add', (req, res) => {
 
 app.post('/students/add', [
 
-    //TODO: Validate ID
-    
+    //TODO: Verify ID is unique
+
         check("name").isLength({min: 2})
         .withMessage("Student Name should be at least 2 characters"),
 
@@ -95,4 +95,14 @@ app.post('/students/add', [
                 res.send(error)
             })
         }
+})
+
+app.get('/grades', (req, res) => {
+    mySqlDao.getGrades()
+    .then((data => {
+        res.render("grades", {"grade": data})
+    }))
+    .catch((error) => {
+        res.send(error)
+    })
 })
