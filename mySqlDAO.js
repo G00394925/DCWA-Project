@@ -28,22 +28,6 @@ var getStudents = function() {
     })
 }
 
-var getStudentByID = function(id) {
-    return new Promise((resolve, reject) => {
-        var query = {
-            sql: 'select * from student where sid=?',
-            values: id 
-        }
-        pool.query(query)
-        .then((data) => {
-            resolve(data)
-        })
-        .catch((error) => [
-            reject(error)
-        ])
-    })
-}
-
 var updateStudent = function(name, age, sid) {
     return new Promise((resolve, reject) => {
         var query = {
@@ -90,4 +74,4 @@ var getGrades = function() {
         })
     ])
 }
-module.exports = { getStudents, updateStudent, addStudent, getStudentByID, getGrades }
+module.exports = { getStudents, updateStudent, addStudent, getGrades }
