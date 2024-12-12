@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 var mySqlDao = require('./mySqlDAO')
+var mongoDAO = require('./mongoDAO')
 const app = express()
 const ejs = require('ejs')
 const { check, validationResult } = require('express-validator');
@@ -105,4 +106,14 @@ app.get('/grades', (req, res) => {
     .catch((error) => {
         res.send(error)
     })
+})
+
+app.get('/lecturers', (req, res) => {
+    mongoDAO.showLecturers()
+    .then((data) => {
+        res.render("lecturers", {"lecturer": data})
+    })
+    .catch((error) => [
+        res.send(error)
+    ])
 })

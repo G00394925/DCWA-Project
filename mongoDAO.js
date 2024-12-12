@@ -11,3 +11,18 @@ MongoClient.connect('mongodb://127.0.0.1:27017')
 .catch((error) => {
     console.log(error.message)
 })
+
+var showLecturers = function() {
+    return new Promise((resolve, reject) => {
+        var cursor = coll.find()
+        cursor.toArray()
+        .then((data) => {
+            resolve(data)
+        })
+        .catch((error) => {
+            reject(error)
+        })
+    })
+}
+
+module.exports = { showLecturers }
