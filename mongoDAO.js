@@ -13,9 +13,13 @@ MongoClient.connect('mongodb://127.0.0.1:27017')
 })
 
 var showLecturers = function() {
-    return new Promise((resolve, reject) => {
-        var cursor = coll.find()
+    return new Promise(async (resolve, reject) => {
+
+        const query = [ { $sort: { _id: 1 } } ]
+        
+        var cursor = await coll.aggregate(query)
         cursor.toArray()
+        
         .then((data) => {
             resolve(data)
         })
