@@ -118,12 +118,22 @@ app.get('/lecturers', (req, res) => {
     ])
 })
 
-app.get('/lecturers/delete/:lid', (req, res) => {
-    mongoDAO.deleteLecturer(req.params.lid)
-    .then(() => {
-        res.redirect('/lecturers')
-    })
-    .catch((error) => {
-        res.send(error)
-    })
+app.get('/lecturers/delete/:lid', async (req, res) => {
+    const id = req.params.lid 
+    const result = await mySqlDao.getLecturerByID(id) // Check if lecturer ID is found in 'modules' table
+
+    if (result == "") {
+        
+        mongoDAO.deleteLecturer(req.params.lid)
+        .then(() => {
+            res.redirect('/lecturers')
+        })
+        .catch((error) => {
+            res.send(error)
+        })
+    }
+
+    else {
+        res.send("<h1>Cannot delete lecturer " + req.params.lid + " as they have associated modules.</h1>")
+    }
 })

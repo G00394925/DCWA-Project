@@ -31,9 +31,7 @@ var showLecturers = function() {
 
 var deleteLecturer = function(id) {
     return new Promise((resolve, reject) => {
-        var cursor = coll.deleteOne({_id: id})
-        cursor.toArray()
-
+        coll.deleteOne({_id: id})
         .then((data) => {
             resolve(data)
         })

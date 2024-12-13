@@ -74,4 +74,22 @@ var getGrades = function() {
         })
     ])
 }
-module.exports = { getStudents, updateStudent, addStudent, getGrades }
+
+var getLecturerByID = function(id) {
+    return new Promise((resolve, reject) => {
+        var query = {
+            sql: 'SELECT lecturer FROM module WHERE lecturer = ?',
+            values: id
+        }
+
+        pool.query(query)
+        .then((data) => {
+            resolve(data)
+            console.log(data)
+        })
+        .catch((error) => {
+            reject(error)
+        })
+    })
+}
+module.exports = { getStudents, updateStudent, addStudent, getGrades, getLecturerByID }
