@@ -74,6 +74,23 @@ var getGrades = function() {
         })
     ])
 }
+var getStudentByID = function(id) {
+    return new Promise((resolve, reject) => {
+        var query = {
+            sql: 'SELECT sid FROM student WHERE sid = ?',
+            values: id
+        }
+
+        pool.query(query)
+        .then((data) => {
+            resolve(data)
+            console.log(data)
+        })
+        .catch((error) => {
+            reject(error)
+        })
+    })
+}
 
 var getLecturerByID = function(id) {
     return new Promise((resolve, reject) => {
@@ -92,4 +109,4 @@ var getLecturerByID = function(id) {
         })
     })
 }
-module.exports = { getStudents, updateStudent, addStudent, getGrades, getLecturerByID }
+module.exports = { getStudents, updateStudent, addStudent, getGrades, getStudentByID, getLecturerByID }

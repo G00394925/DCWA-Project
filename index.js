@@ -67,9 +67,6 @@ app.get('/students/add', (req, res) => {
 })
 
 app.post('/students/add', [
-
-    //TODO: Verify ID is unique
-            
         check("name").isLength({min: 2})
         .withMessage("Student Name should be at least 2 characters"),
 
@@ -122,7 +119,7 @@ app.get('/lecturers/delete/:lid', async (req, res) => {
     const id = req.params.lid 
     const result = await mySqlDao.getLecturerByID(id) // Check if lecturer ID is found in 'modules' table
 
-    if (result == "") {
+    if (result == "") { // Lecturer ID not found in module -- no associated modules
         
         mongoDAO.deleteLecturer(req.params.lid)
         .then(() => {
